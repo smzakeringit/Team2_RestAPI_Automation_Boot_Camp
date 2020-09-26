@@ -183,15 +183,54 @@ public class TweetAPIClientTest {
 
         Assert.assertEquals(404,actualStatusCode);
     }
+    /**
+     * Create reTweet with invalid data
+     */
+    @Test(enabled = true)
+    public void testCreateRetweetWithInvalidData(){
+        ValidatableResponse response=this.tweetAPIClient.createReTweetWithInvalidData(1309188858433724422l);
+        int actualReTweet=response.extract().statusCode();
+        Assert.assertEquals(404,actualReTweet);
+    }
+    /**
+     * Un reTweet with invalid data
+     */
+    @Test(enabled = true)
+    public void testUnReTweetInvalidId(){
+        ValidatableResponse response=this.tweetAPIClient.unReTweetInvalidID(324236500424335363l);
+        int actualUnRetweet=response.extract().statusCode();
+        Assert.assertEquals(404,actualUnRetweet);
+    }
 
-
-
-
-
-
-
-
-
-
+//    /**
+//    * FavoriteList Tweet With Invalid Endpoint
+//    */
+//    @Test(enabled = true)
+//    public void testFavoriteListTweetWithInvalidEndpoint(){
+//        ValidatableResponse response=this.tweetAPIClient.favoriteListTweetWithInvalidEndPoint("smzakerinjk");
+//        int actualCode=response.extract().statusCode();
+//        System.out.println(actualCode);
+//        Assert.assertEquals(200, actualCode);
+//    }
+    /**
+     * Show tweet with invalid data
+     */
+    @Test(enabled = true)
+    public void testShowTweetIDWithInvalidData(){
+        String tweet="Today is cloudy.";
+        ValidatableResponse response=this.tweetAPIClient.showTweetIDWithInvalidData(1309196682865840000l);
+        System.out.println(response.extract().body().asString());
+        int actualCode = response.extract().statusCode();
+        Assert.assertEquals(404, actualCode);
+    }
+    /**
+     * create Status LookUp with invalid data
+     */
+    @Test(enabled = true)
+    public void testGetStatusLookUpWithInvalidData(){
+        ValidatableResponse response=this.tweetAPIClient.getStatusLookUpWithInvalidData(20,"Shohel41710088");
+        int actualResult=response.extract().statusCode();
+        Assert.assertEquals(404,actualResult);
+    }
 
 }

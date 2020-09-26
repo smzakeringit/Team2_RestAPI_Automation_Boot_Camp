@@ -41,9 +41,7 @@ public class TweetAPIClient extends RestAPI {
     private final String UNRETWEET_POST_USER_ENDPOINT = "/statuses/unretweet.json";
     //
     private final String FAVORITE_LIST_TWEET="/favorites/list.json";
-
-
-
+    //
 
 
 
@@ -148,26 +146,93 @@ public class TweetAPIClient extends RestAPI {
                 .when().post(this.baseUrl + this.FAVORITES_POST_USER_ENDPOINT + "1234")
                 .then();
     }
+    /**
+     * Show Tweet ID
+     */
     public ValidatableResponse showTweetID(Long tweetId) {
         return given().auth().oauth(this.apiKey, this.apiSecretKey, this.accessToken, this.accessTokenSecret)
                 .queryParam("id", tweetId)
                 .when().post(this.baseUrl + this.SHOW_GET_USER_ENDPOINT)
                 .then();
     }
+
     public ValidatableResponse unReTweet(Long tweetId) {
         return given().auth().oauth(this.apiKey, this.apiSecretKey, this.accessToken, this.accessTokenSecret)
                 .queryParam("id", tweetId)
                 .when().post(this.baseUrl + this.UNRETWEET_POST_USER_ENDPOINT)
                 .then();
     }
+    /**
+     * Favorite List Tweet
+     */
     public ValidatableResponse favoritesListTweet() {
         return given().auth().oauth(this.apiKey, this.apiSecretKey, this.accessToken, this.accessTokenSecret)
                 .when().get(this.baseUrl + this.FAVORITE_LIST_TWEET)
                 .then();
     }
+    /**
+     * Favorite List With Wrong End-Point Tweet
+     */
     public ValidatableResponse favoritesListWithWrongEndPointTweet() {
         return given().auth().oauth(this.apiKey, this.apiSecretKey, this.accessToken, this.accessTokenSecret)
                 .when().get(this.baseUrl + this.FAVORITE_LIST_TWEET+1234)
+                .then();
+    }
+    /**
+     * Create reTweet with invalid data
+     */
+    public ValidatableResponse createReTweetWithInvalidData(Long reTweetId){
+        return given().auth().oauth(this.apiKey, this.apiSecretKey, this.accessToken, this.accessTokenSecret)
+                .param("id", reTweetId)
+                .when().post(this.baseUrl+this.CREATE_RETWEET_ENDPOINT+"1234")
+                .then();
+    }
+
+    /**
+     * Un reTweet with invalid data
+     */
+    public ValidatableResponse unReTweetInvalidID(Long tweetId) {
+        return given().auth().oauth(this.apiKey, this.apiSecretKey, this.accessToken, this.accessTokenSecret)
+                .queryParam("id", tweetId)
+                .when().post(this.baseUrl + this.UNRETWEET_POST_USER_ENDPOINT)
+                .then();
+    }
+    /**
+     * Favorites with invalid data
+     */
+    public ValidatableResponse favoritesTweetWithWrongFavoritesEndPoint(long tweetId) {
+        return given().auth().oauth(this.apiKey, this.apiSecretKey, this.accessToken, this.accessTokenSecret)
+                .param("id", tweetId)
+                .when().post(this.baseUrl + this.FAVORITES_POST_USER_ENDPOINT + "1234")
+                .then();
+    }
+    /**
+     *Favorite List
+     * @param userId
+     * @return
+     */
+    public ValidatableResponse favoriteListTweet(String userId) {
+        return given().auth().oauth(this.apiKey, this.apiSecretKey, this.accessToken, this.accessTokenSecret)
+                .param("user_id", userId)
+                .when().get(this.baseUrl + this.FAVORITES_LIST_USER_ENDPOINT)
+                .then();
+    }
+    /**
+     * Show tweet with invalid data
+     */
+    public ValidatableResponse showTweetIDWithInvalidData(Long tweetId) {
+        return given().auth().oauth(this.apiKey, this.apiSecretKey, this.accessToken, this.accessTokenSecret)
+                .queryParam("id", tweetId)
+                .when().get(this.baseUrl + this.SHOW_GET_USER_ENDPOINT)
+                .then();
+    }
+    /**
+     * create Status LookUp with invalid data
+     */
+    public ValidatableResponse getStatusLookUpWithInvalidData(int id,String tweetId) {
+        return given().auth().oauth(this.apiKey, this.apiSecretKey, this.accessToken, this.accessTokenSecret)
+                .queryParam("id",id, tweetId)
+                .when().get(this.baseUrl + this.STATUS_LOOKUP_GET_USER_ENDPOINT+"1234")
                 .then();
     }
 }
